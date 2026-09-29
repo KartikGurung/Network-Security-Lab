@@ -9,10 +9,7 @@ This repository contains a collection of Python-based security experiments cover
 - Experiment-2/sample.txt — sample text file used for hashing demonstration
 - Experiment-3/exp-3.py — challenge-response authentication and replay attack example
 - Experiment-3/exp-3_improvement.py — FastAPI-based challenge-response prototype
-- X509-Self-Signed-Certificate/certificate_verify.py — validates a self-signed certificate against its private key
-- X509-Self-Signed-Certificate/cert.cnf — certificate configuration file
-- X509-Self-Signed-Certificate/private.key — sample private key
-- X509-Self-Signed-Certificate/certificate.crt — sample X.509 certificate
+- X509-Self-Signed-Certificate
 
 ## Experiment Overview
 
