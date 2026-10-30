@@ -116,3 +116,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     analyze_capture(sys.argv[1])
+#  to run this code open terminal and write this command:  python3 wpa2_analyzer.py wpa2-four-way-handshake.pcap
