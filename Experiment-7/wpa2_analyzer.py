@@ -3,27 +3,31 @@ from scapy.all import rdpcap, EAPOL, Dot11
 import sys
 
 
-def identify_message(key_info):
-    # Extract important Key Information flags
+
+def identify_message(key_info, nonce):
+
     ack = bool(key_info & 0x0080)
     mic = bool(key_info & 0x0100)
     install = bool(key_info & 0x0040)
-    secure = bool(key_info & 0x0200)
 
-    # Identify handshake message using flag combinations
+    # Message 1: AP sends ANonce
     if ack and not mic:
         return "Message 1 (AP -> Client)"
 
-    elif not ack and mic and not secure:
-        return "Message 2 (Client -> AP)"
-
+    # Message 3: AP sends key installation information
     elif ack and mic and install:
         return "Message 3 (AP -> Client)"
 
-    elif not ack and mic and secure:
+    # Message 4: Client sends acknowledgment with zero nonce
+    elif not ack and mic and nonce == bytes(32):
         return "Message 4 (Client -> AP)"
 
+    # Message 2: Client sends SNonce
+    elif not ack and mic and nonce != bytes(32):
+        return "Message 2 (Client -> AP)"
+
     return "Other EAPOL-Key Message"
+
 
 
 def analyze_capture(filename):
@@ -64,13 +68,14 @@ def analyze_capture(filename):
         replay_counter = int.from_bytes(data[9:17], "big")
 
         # Extract Nonce
-        nonce = data[17:49].hex()
+        nonce_bytes = data[17:49]
+        nonce = nonce_bytes.hex()
 
         # Extract MIC
         mic_value = data[81:97].hex()
 
         # Identify handshake message
-        message = identify_message(key_info)
+        message = identify_message(key_info, nonce_bytes)
 
         if message.startswith("Message"):
             number = message.split()[1]
