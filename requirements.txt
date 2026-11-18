@@ -1,0 +1,17 @@
+# Network Security Lab - Core Dependencies
+# Install with: pip install -r requirements.txt
+
+# Cryptography & PKI (Experiment 4)
+cryptography>=41.0.0
+
+# Packet Inspection & Wireless Frame Analysis (Experiment 7)
+scapy>=2.5.0
+
+# API Prototype & Challenge-Response Service (Experiment 3)
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+
+# Standard Library Modules (Pre-installed with Python 3.8+):
+# - hashlib (Experiments 2, 3, 4)
+# - random  (Experiment 3)
+# - sys, os (Experiment 7)
